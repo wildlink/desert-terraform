@@ -1,0 +1,45 @@
+{
+  "name": "app-seven",
+  "extraSecretEnv": [
+    {
+      "name": "VAR_3",
+      "key": "VAR_3",
+      "key_name": "secret-env",
+      "optional": false
+    },
+    {
+      "name": "VAR_4",
+      "key": "VAR_4",
+      "key_name": "secret-env",
+      "optional": false
+    }
+  ],
+  "db": true,
+  "dbReplica": true,
+  "image": "path.to.container.image.app-seven:tag",
+  "replicas": 2,
+  "volumeMounts": [
+    {
+      "mount_path": "/mount/path",
+      "name": "volume-1",
+      "read_only": true
+    },
+    {
+      "mount_path": "/mount/path2",
+      "name": "volume-2",
+      "read_only": true
+    }
+  ],
+  "volumes": [
+    {
+      "default_mode": "0644",
+      "name": "volume-1",
+      "secret_name": "secret-volume-1"
+    },
+    {
+      "default_mode": "0644",
+      "name": "volume-2",
+      "secret_name": "secret-volume-2"
+    }
+  ]
+}

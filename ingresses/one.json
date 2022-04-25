@@ -1,0 +1,16 @@
+{
+  "name": "one",
+  "id": "ingress-one",
+  "rules": [
+    {
+      "host": "example.com",
+      "paths": [
+        {
+          "path": "/",
+          "serviceName": "app-one",
+          "servicePort": 80
+        }
+      ]
+    }
+  ]
+}

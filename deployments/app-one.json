@@ -1,0 +1,91 @@
+{
+  "name": "app-one",
+  "extraSecretEnv": [
+    {
+      "name": "VAR_3",
+      "key": "VAR_3",
+      "key_name": "secret-env",
+      "optional": false
+    },
+    {
+      "name": "VAR_4",
+      "key": "VAR_4",
+      "key_name": "secret-env",
+      "optional": false
+    }
+  ],
+  "db": true,
+  "dbReplica": true,
+  "image": "path.to.container.image.app-one:tag",
+  "replicas": 2,
+  "services": [
+    {
+      "port": 80,
+      "targetPort": 80,
+      "type": "NodePort"
+    }
+  ],
+  "sidecars": [
+    {
+      "name": "sidecar1",
+      "command": [],
+      "image": "sidecar.image:tag",
+      "secretEnv": [
+        {
+          "name": "SIDECAR_VAR_1",
+          "key": "SIDECAR_VAR_1",
+          "key_name": "secret-env",
+          "optional": false
+        },
+        {
+          "name": "SIDECAR_VAR_2",
+          "key": "SIDECAR_VAR_2",
+          "key_name": "secret-env",
+          "optional": false
+        },
+        {
+          "name": "SIDECAR_VAR_3",
+          "key": "SIDECAR_VAR_3",
+          "key_name": "secret-env",
+          "optional": false
+        }
+      ],
+      "volumeMounts": [
+        {
+          "mount_path": "/sidecar/mount/path",
+          "name": "sidecar-volume",
+          "read_only": true
+        }
+      ]
+    }
+  ],
+  "volumeMounts": [
+    {
+      "mount_path": "/mount/path",
+      "name": "volume-1",
+      "read_only": true
+    },
+    {
+      "mount_path": "/mount/path2",
+      "name": "volume-2",
+      "read_only": true
+    }
+  ],
+  "volumes": [
+    {
+      "default_mode": "0644",
+      "name": "volume-1",
+      "secret_name": "secret-volume-1"
+    },
+    {
+      "default_mode": "0644",
+      "name": "volume-2",
+      "secret_name": "secret-volume-2"
+    },
+    {
+      "default_mode": "0644",
+      "name": "sidecar-volume",
+      "secret_name": "secret-volume-3"
+    }
+  ]
+}

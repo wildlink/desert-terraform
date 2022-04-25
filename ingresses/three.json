@@ -1,0 +1,26 @@
+{
+  "name": "three",
+  "id": "ingress-three",
+  "rules": [
+    {
+      "host": "example3.com",
+      "paths": [
+        {
+          "path": "/",
+          "serviceName": "app-three",
+          "servicePort": 80
+        },
+        {
+          "path": "/test",
+          "serviceName": "app-two",
+          "servicePort": 80
+        },
+        {
+          "path": "/test/eight",
+          "serviceName": "app-eight",
+          "servicePort": 80
+        }
+      ]
+    }
+  ]
+}

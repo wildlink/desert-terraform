@@ -1,0 +1,19 @@
+{
+  "name": "four",
+  "annotations": {
+    "networking.gke.io/managed-certificates": "star-ingress-four"
+  },
+  "id": "ingress-four",
+  "rules": [
+    {
+      "host": "example4.com",
+      "paths": [
+        {
+          "path": "/",
+          "serviceName": "app-four",
+          "servicePort": 80
+        }
+      ]
+    }
+  ]
+}

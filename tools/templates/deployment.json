@@ -1,0 +1,39 @@
+{
+  "name": "",
+  "extraEnv": [],
+  "extraSecretEnv": [],
+  "db": false,
+  "dbReplica": false,
+  "googleApplicationCredentials": false,
+  "replicas": 1,
+  "ports": [
+    {
+      "container_port": 80,
+      "protocol": "TCP"
+    }
+  ],
+  "readinessProbes": [
+    {
+      "failure_threshold": 3,
+      "initial_delay_seconds": 10,
+      "period_seconds": 10,
+      "success_threshold": 1,
+      "timeout_seconds": 1,
+      "http_path": "/",
+      "http_port": 80,
+      "http_scheme": "HTTP"
+    }
+  ],
+  "resources": [
+    {
+      "cpu_request": "100m",
+      "cpu_limit": "500m",
+      "memory_request": "100M",
+      "memory_limit": "300M"
+    }
+  ],
+  "services": [],
+  "sidecars": [],
+  "volumeMounts": [],
+  "volumes": []
+}

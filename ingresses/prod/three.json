@@ -1,0 +1,5 @@
+{
+  "annotations": {
+    "networking.gke.io/managed-certificates": "ingress-three"
+  }
+}
