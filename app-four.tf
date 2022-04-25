@@ -1,9 +1,9 @@
-resource "kubernetes_deployment" "app-two" {
+resource "kubernetes_deployment" "app-four" {
 
   metadata {
-    name = "app-two"
+    name = "${local.workspace["prefix"]}app-four"
     labels = {
-      run = "app-two"
+      run = "${local.workspace["prefix"]}app-four"
     }
   }
 
@@ -11,7 +11,7 @@ resource "kubernetes_deployment" "app-two" {
     replicas = 2
     selector {
       match_labels = {
-        run = "app-two"
+        run = "${local.workspace["prefix"]}app-four"
       }
     }
     template {
@@ -19,23 +19,23 @@ resource "kubernetes_deployment" "app-two" {
         annotations = {
         }
         labels = {
-          run = "app-two"
+          run = "${local.workspace["prefix"]}app-four"
         }
       }
       spec {
         automount_service_account_token = false
         enable_service_links            = false
         container {
-          image   = "path.to.container.image:tag"
-          name    = "app-two"
+          image   = "path.to.container.${local.workspace["prefix"]}image:tag"
+          name    = "${local.workspace["prefix"]}app-four"
           args    = []
           command = []
 
           env {
-            name = "VAR_1"
+            name = "DB_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_1"
+                key      = local.workspace["db_uri"]
                 name     = "secret-env"
                 optional = false
               }
@@ -43,10 +43,10 @@ resource "kubernetes_deployment" "app-two" {
           }
 
           env {
-            name = "VAR_2"
+            name = "REPLICA_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_2"
+                key      = local.workspace["db_replica_uri"]
                 name     = "secret-env"
                 optional = false
               }
@@ -117,51 +117,6 @@ resource "kubernetes_deployment" "app-two" {
           }
         }
 
-        container {
-          name    = "sidecar1"
-          command = []
-          image   = "sidecar.image:tag"
-
-          env {
-            name = "SIDECAR_VAR_1"
-            value_from {
-              secret_key_ref {
-                key      = "SIDECAR_VAR_1"
-                name     = "secret-env"
-                optional = false
-              }
-            }
-          }
-
-          env {
-            name = "SIDECAR_VAR_2"
-            value_from {
-              secret_key_ref {
-                key      = "SIDECAR_VAR_2"
-                name     = "secret-env"
-                optional = false
-              }
-            }
-          }
-
-          env {
-            name = "SIDECAR_VAR_3"
-            value_from {
-              secret_key_ref {
-                key      = "SIDECAR_VAR_3"
-                name     = "secret-env"
-                optional = false
-              }
-            }
-          }
-
-          volume_mount {
-            mount_path = "/sidecar/mount/path"
-            name       = "sidecar-volume"
-            read_only  = true
-          }
-        }
-
         volume {
           name = "volume-1"
           secret {
@@ -177,15 +132,6 @@ resource "kubernetes_deployment" "app-two" {
             default_mode = "0644"
             optional     = false
             secret_name  = "secret-volume-1"
-          }
-        }
-
-        volume {
-          name = "sidecar-volume"
-          secret {
-            default_mode = "0644"
-            optional     = false
-            secret_name  = "secret-volume-3"
           }
         }
       }

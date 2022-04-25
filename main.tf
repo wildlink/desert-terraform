@@ -14,14 +14,14 @@ terraform {
 }
 
 provider "google" {
-  project = "wildfire-cloud-project"
+  project = local.workspace["project"]
   region  = "us-central1"
 }
 
 data "google_client_config" "default" {}
 
 data "google_container_cluster" "default" {
-  name     = "prod"
+  name     = local.workspace["cluster"]
   location = "us-central1-a"
 }
 

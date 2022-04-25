@@ -1,9 +1,9 @@
-resource "kubernetes_deployment" "app-four" {
+resource "kubernetes_deployment" "app-ten" {
 
   metadata {
-    name = "app-four"
+    name = "${local.workspace["prefix"]}app-ten"
     labels = {
-      run = "app-four"
+      run = "${local.workspace["prefix"]}app-ten"
     }
   }
 
@@ -11,7 +11,7 @@ resource "kubernetes_deployment" "app-four" {
     replicas = 2
     selector {
       match_labels = {
-        run = "app-four"
+        run = "${local.workspace["prefix"]}app-ten"
       }
     }
     template {
@@ -19,23 +19,23 @@ resource "kubernetes_deployment" "app-four" {
         annotations = {
         }
         labels = {
-          run = "app-four"
+          run = "${local.workspace["prefix"]}app-ten"
         }
       }
       spec {
         automount_service_account_token = false
         enable_service_links            = false
         container {
-          image   = "path.to.container.image:tag"
-          name    = "app-four"
+          image   = "path.to.container.${local.workspace["prefix"]}image:tag"
+          name    = "${local.workspace["prefix"]}app-ten"
           args    = []
           command = []
 
           env {
-            name = "VAR_1"
+            name = "DB_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_1"
+                key      = local.workspace["db_uri"]
                 name     = "secret-env"
                 optional = false
               }
@@ -43,10 +43,10 @@ resource "kubernetes_deployment" "app-four" {
           }
 
           env {
-            name = "VAR_2"
+            name = "REPLICA_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_2"
+                key      = local.workspace["db_replica_uri"]
                 name     = "secret-env"
                 optional = false
               }

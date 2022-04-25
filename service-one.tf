@@ -1,14 +1,14 @@
 resource "kubernetes_service" "service-one" {
   metadata {
-    name = "service-one"
+    name = "${local.workspace["prefix"]}service-one"
     labels = {
-      "run" = "service-one"
+      "run" = "${local.workspace["prefix"]}service-one"
     }
   }
 
   spec {
     selector = {
-      run = "service-one"
+      run = "${local.workspace["prefix"]}service-one"
     }
     port {
       port        = 80

@@ -1,9 +1,9 @@
 resource "kubernetes_deployment" "app-three" {
 
   metadata {
-    name = "app-three"
+    name = "${local.workspace["prefix"]}app-three"
     labels = {
-      run = "app-three"
+      run = "${local.workspace["prefix"]}app-three"
     }
   }
 
@@ -11,7 +11,7 @@ resource "kubernetes_deployment" "app-three" {
     replicas = 2
     selector {
       match_labels = {
-        run = "app-three"
+        run = "${local.workspace["prefix"]}app-three"
       }
     }
     template {
@@ -19,23 +19,23 @@ resource "kubernetes_deployment" "app-three" {
         annotations = {
         }
         labels = {
-          run = "app-three"
+          run = "${local.workspace["prefix"]}app-three"
         }
       }
       spec {
         automount_service_account_token = false
         enable_service_links            = false
         container {
-          image   = "path.to.container.image:tag"
-          name    = "app-three"
+          image   = "path.to.container.${local.workspace["prefix"]}image:tag"
+          name    = "${local.workspace["prefix"]}app-three"
           args    = []
           command = []
 
           env {
-            name = "VAR_1"
+            name = "DB_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_1"
+                key      = local.workspace["db_uri"]
                 name     = "secret-env"
                 optional = false
               }
@@ -43,10 +43,10 @@ resource "kubernetes_deployment" "app-three" {
           }
 
           env {
-            name = "VAR_2"
+            name = "REPLICA_URI"
             value_from {
               secret_key_ref {
-                key      = "VAR_2"
+                key      = local.workspace["db_replica_uri"]
                 name     = "secret-env"
                 optional = false
               }
@@ -120,7 +120,7 @@ resource "kubernetes_deployment" "app-three" {
         container {
           name    = "sidecar1"
           command = []
-          image   = "sidecar.image:tag"
+          image   = "sidecar.${local.workspace["prefix"]}image:tag"
 
           env {
             name = "SIDECAR_VAR_1"
